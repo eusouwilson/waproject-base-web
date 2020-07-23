@@ -5,10 +5,12 @@ import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import React, { memo, useCallback, useRef, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-
+import { ItemOrderDataProvider } from '../../../hooks/itemOrder';
 import DashboardIndexPage from './Dashboard';
 import SamplePage from './Sample';
 import UserIndexPage from './Users';
+import OrderIndexPage from './Orders';
+import ItemIndexPage from './Items';
 
 export const ScrollTopContext = React.createContext<Function>(() => {});
 
@@ -43,7 +45,9 @@ const AdminPage = memo((props: {}) => {
       // role: enRoles.admin,
       icon: AccountMultipleIcon
     },
-    { path: '/exemplos', display: 'Exemplos', icon: StarIcon }
+    { path: '/exemplos', display: 'Exemplos', icon: StarIcon },
+    { path: '/pedidos', display: 'Pedidos', icon: ViewDashboardIcon },
+    { path: '/produtos', display: 'produtos', icon: ViewDashboardIcon }
   ]);
 
   const scrollTop = useCallback(() => setTimeout(() => mainContent.current.scrollTo(0, 0), 100), []);
@@ -52,16 +56,21 @@ const AdminPage = memo((props: {}) => {
   return (
     <div className={classes.root}>
       <ScrollTopContext.Provider value={scrollTop}>
-        <Drawer menu={menu}>
-          <main ref={mainContent} className={classes.content}>
-            <Switch>
-              <Route path='/exemplos' component={SamplePage} />
-              <Route path='/usuarios' component={UserIndexPage} />
-              <Route path='/' component={DashboardIndexPage} />
-              <Route render={renderRedirect} />
-            </Switch>
-          </main>
-        </Drawer>
+        <ItemOrderDataProvider>
+          <Drawer menu={menu}>
+            <main ref={mainContent} className={classes.content}>
+              <Switch>
+                <Route path='/exemplos' component={SamplePage} />
+                <Route path='/usuarios' component={UserIndexPage} />
+                <Route path='/pedidos' component={OrderIndexPage} />
+                <Route path='/produtos' component={ItemIndexPage} />
+
+                <Route path='/' component={DashboardIndexPage} />
+                <Route render={renderRedirect} />
+              </Switch>
+            </main>
+          </Drawer>
+        </ItemOrderDataProvider>
       </ScrollTopContext.Provider>
     </div>
   );

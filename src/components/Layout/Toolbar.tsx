@@ -10,7 +10,7 @@ import React, { memo, Props, useCallback, useContext } from 'react';
 
 import { DrawerContext } from './Drawer/context';
 import UserMenu from './UserMenu';
-
+import CartMenu from './CartMenu';
 interface IProps extends Props<{}> {
   title?: string;
 }
@@ -73,6 +73,9 @@ const Toolbar = memo((props: IProps) => {
                 <Typography variant='h6' color='inherit' noWrap>
                   {props.title || 'App'}
                 </Typography>
+              </Grid>
+              <Grid item xs={false}>
+                <CartMenu />
               </Grid>
               <Grid item xs={false}>
                 <UserMenu />

@@ -11,7 +11,6 @@ import Alert from 'components/Shared/Alert';
 import Loader from 'components/Shared/Loader';
 import Toast from 'components/Shared/Toast';
 import React, { memo, useMemo, useState } from 'react';
-
 const App = memo(() => {
   const [currentTheme, setCurrentTheme] = useState<ThemesTypes>(
     (localStorage.getItem('app-theme') ?? 'light') as ThemesTypes
